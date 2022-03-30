@@ -8,6 +8,8 @@ from rest_framework import status
 from . models import result
 from . serializers import resultSerializer
 import subprocess
+import mysql.connector
+from mysql.connector import Error
 #from subprocess import Popen, PIPE
 
 
@@ -24,13 +26,38 @@ class resultList(APIView):
     
 class ExecutePythonFileView(APIView):
     def get(self, request):
-        # Execute script
         try:
             subprocess.check_output(['python', 'code.py'])
         except subprocess.CalledProcessError as e:
             return HttpResponse("Failed!")
             
         return HttpResponse("Executed!")
+
+class ExecuteWebDataView(APIView):
+    def get(self, request):
+        try:
+            cnx = mysql.connector.connect(host='localhost',
+                                            database='test',
+                                            user='root',
+                                            password='')
+            cursor = cnx.cursor()
+
+            cursor.execute("SELECT max(id), name FROM test")
+
+            result = cursor.fetchall()
+
+            for x in result:
+                print(x)
+
+        except mysql.connector.Error as err:
+            return HttpResponse("Failed!")
+            
+        return HttpResponse("Executed!")
+
+        
+
+
+
 
     
         

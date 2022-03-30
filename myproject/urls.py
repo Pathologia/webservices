@@ -21,5 +21,6 @@ from webapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('result/', views.resultList.as_view()),
-    path('script/', views.ExecutePythonFileView.as_view())
+    path('script/', views.ExecutePythonFileView.as_view()),
+    path('webdata/', views.ExecuteWebDataView.as_view())
 ]
