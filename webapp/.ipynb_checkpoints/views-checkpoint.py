@@ -18,4 +18,3 @@ class resultList(APIView):
         return Response(serializer.data)
     def post(self):
         pass
-    
